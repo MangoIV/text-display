@@ -11,18 +11,17 @@ import Control.Exception
 import Control.Monad
 import Data.ByteString
 import Data.List.NonEmpty
-import qualified Data.List.NonEmpty as NE
+import Data.List.NonEmpty qualified as NE
 import Data.Maybe
-import qualified Data.Text as T
+import Data.Text qualified as T
 import Data.Text.Arbitrary
-import qualified Data.Text.Lazy as TL
-import qualified Data.Text.Lazy.Builder as TB
+import Data.Text.Display
+import Data.Text.Lazy qualified as TL
+import Data.Text.Lazy.Builder qualified as TB
 import System.Timeout
 import Test.Hspec
 import Test.Hspec.QuickCheck
 import Test.ShouldNotTypecheck (shouldNotTypecheck)
-
-import Data.Text.Display
 
 main :: IO ()
 main = hspec spec

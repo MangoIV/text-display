@@ -18,37 +18,36 @@
 --  Stability   : stable
 --
 --  Use 'display' to produce user-facing text
-module Data.Text.Display
-  ( -- * Documentation
-    display
-  , Display (..)
+module Data.Text.Display (
+  -- * Documentation
+  display,
+  Display (..),
 
-    -- * Deriving your instance automatically
-  , ShowInstance (..)
-  , OpaqueInstance (..)
+  -- * Deriving your instance automatically
+  ShowInstance (..),
+  OpaqueInstance (..),
 
-    -- * Writing your instance by hand
-  , displayParen
+  -- * Writing your instance by hand
+  displayParen,
 
-    -- * Design choices
-    -- $designChoices
-  )
-where
+  -- * Design choices
+  -- $designChoices
+) where
 
 import Control.Exception hiding (TypeError)
 import Data.ByteString
-import qualified Data.ByteString.Lazy as BL
+import Data.ByteString.Lazy qualified as BL
 import Data.Int
 import Data.Kind
 import Data.List.NonEmpty
 import Data.Proxy
 import Data.Text (Text)
-import qualified Data.Text as T
-import qualified Data.Text.Lazy as TL
+import Data.Text qualified as T
+import Data.Text.Lazy qualified as TL
 import Data.Text.Lazy.Builder (Builder)
-import qualified Data.Text.Lazy.Builder as TB
-import qualified Data.Text.Lazy.Builder.Int as TB
-import qualified Data.Text.Lazy.Builder.RealFloat as TB
+import Data.Text.Lazy.Builder qualified as TB
+import Data.Text.Lazy.Builder.Int qualified as TB
+import Data.Text.Lazy.Builder.RealFloat qualified as TB
 import Data.Void (Void)
 import Data.Word
 import GHC.TypeLits
@@ -130,11 +129,11 @@ class Display a where
   -- > infix 5 :*: -- arbitrary choice of precedence
   -- > instance (Display a, Display b) => Display (Pair a b) where
   -- >   displayPrec prec (a :*: b) = displayParen (prec > 5) $ displayPrec 6 a <> " :*: " <> displayPrec 6 b
-  displayPrec
-    :: Int
-    -- ^ The precedence level passed in by the surrounding context
-    -> a
-    -> Builder
+  displayPrec ::
+    -- | The precedence level passed in by the surrounding context
+    Int ->
+    a ->
+    Builder
   displayPrec _ = displayBuilder
 
 -- | Convert a value to a readable 'Text'.
@@ -242,8 +241,8 @@ instance KnownSymbol str => Display (OpaqueInstance str a) where
 newtype ShowInstance (a :: Type)
   = ShowInstance a
   deriving newtype
-    ( Show
-      -- ^ @since 0.0.1.0
+    ( -- | @since 0.0.1.0
+      Show
     )
 
 -- | This wrapper allows you to rely on a pre-existing 'Show' instance in order to derive 'Display' from it.
